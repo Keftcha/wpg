@@ -7,12 +7,8 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", root)
+	http.HandleFunc("/", gallery)
 
 	fmt.Println("Server started")
 	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func root(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Up")
 }
