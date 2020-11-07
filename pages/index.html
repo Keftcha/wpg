@@ -5,6 +5,14 @@
         <title>WPG - Gallery</title>
     </head>
     <body>
-        the gallery
+        {{range .dirs}}
+            {{.}}
+        {{end}}
+
+        <br>
+
+        {{ range .pics}}
+            {{.}}
+        {{end}}
     </body>
 </html>
