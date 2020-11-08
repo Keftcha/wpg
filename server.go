@@ -8,6 +8,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", gallery)
+	http.HandleFunc("/slideshow/", slideshow)
 
 	http.Handle(
 		"/pics/",
