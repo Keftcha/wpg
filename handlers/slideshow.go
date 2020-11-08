@@ -1,4 +1,4 @@
-package main
+package handelers
 
 import (
 	"fmt"
@@ -7,9 +7,11 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+
+	"github.com/keftcha/wpg/helpers"
 )
 
-func slideshow(w http.ResponseWriter, r *http.Request) {
+func Slideshow(w http.ResponseWriter, r *http.Request) {
 	// Query parameters:
 	// - type → slideshow type
 	// - img → current img path displayed
@@ -44,7 +46,7 @@ func slideshow(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Define images names list
-	filesName := make([]webFile, 0)
+	filesName := make([]helpers.WebFile, 0)
 	switch slideshowType {
 	case "crt":
 		// Read files in the asked directory (prefixed by `/pics`)
@@ -54,11 +56,11 @@ func slideshow(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		// Get pictures file
-		_, filesName = distinctDirsAndPics(files, dir)
+		_, filesName = helpers.DistinctDirsAndPics(files, dir)
 	case "sub":
-		reccursivlyFindPics(dir, &filesName)
+		helpers.ReccursivlyFindPics(dir, &filesName)
 	case "all":
-		reccursivlyFindPics("/", &filesName)
+		helpers.ReccursivlyFindPics("/", &filesName)
 	}
 
 	if len(filesName) <= 0 {
@@ -69,7 +71,7 @@ func slideshow(w http.ResponseWriter, r *http.Request) {
 	// Get the image to display
 	imgName := r.URL.Query().Get("img")
 	imgIdx := index(filesName, imgName)
-	var img webFile
+	var img helpers.WebFile
 	if imgName == "" || imgIdx == -1 {
 		img = (filesName)[0]
 		imgIdx = 0
@@ -110,7 +112,7 @@ func validateDelay(delay string) int {
 	return int(nb)
 }
 
-func index(lst []webFile, str string) int {
+func index(lst []helpers.WebFile, str string) int {
 	for idx := 0; idx < len(lst); idx++ {
 		if lst[idx].Path == str {
 			return idx

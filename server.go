@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/keftcha/wpg/handlers"
 )
 
 func main() {
-	http.HandleFunc("/", gallery)
-	http.HandleFunc("/slideshow/", slideshow)
+	http.HandleFunc("/", handelers.Gallery)
+	http.HandleFunc("/slideshow/", handelers.Slideshow)
 
 	http.Handle(
 		"/pics/",

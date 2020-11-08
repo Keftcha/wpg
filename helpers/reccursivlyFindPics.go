@@ -1,11 +1,11 @@
-package main
+package helpers
 
 import (
 	"fmt"
 	"io/ioutil"
 )
 
-func reccursivlyFindPics(baseDir string, wbfls *[]webFile) {
+func ReccursivlyFindPics(baseDir string, wbfls *[]WebFile) {
 	fls, err := ioutil.ReadDir("/pics" + baseDir)
 	if err != nil {
 		fmt.Println(err)
@@ -15,10 +15,10 @@ func reccursivlyFindPics(baseDir string, wbfls *[]webFile) {
 	for _, fle := range fls {
 		if fle.IsDir() {
 			// Search in the directory other images
-			reccursivlyFindPics(baseDir+fle.Name()+"/", wbfls)
+			ReccursivlyFindPics(baseDir+fle.Name()+"/", wbfls)
 		} else {
 			// Add finded pictures
-			newWbfls := append(*wbfls, newWebFileImage(fle, baseDir))
+			newWbfls := append(*wbfls, NewWebFileImage(fle, baseDir))
 			*wbfls = newWbfls
 		}
 	}

@@ -1,10 +1,10 @@
-package main
+package helpers
 
 import (
 	"strings"
 )
 
-func parentDir(path string) string {
+func ParentDir(path string) string {
 	// Remove trailing `/` caracter
 	path = path[:len(path)-1]
 	// Find the index of the last `/`

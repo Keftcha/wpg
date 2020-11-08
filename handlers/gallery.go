@@ -1,13 +1,15 @@
-package main
+package handelers
 
 import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/keftcha/wpg/helpers"
 )
 
-func gallery(w http.ResponseWriter, r *http.Request) {
+func Gallery(w http.ResponseWriter, r *http.Request) {
 	// Get the directory where the user want to be
 	path := r.URL.Path
 
@@ -20,9 +22,9 @@ func gallery(w http.ResponseWriter, r *http.Request) {
 
 	// Make the map with infos to parse the template and
 	// Separate directories and pictures
-	info := make(map[string]interface{}) // ← This is realy bad
+	info := make(map[string]interface{})
 	info["crntPath"] = path
-	info["dirs"], info["pics"] = distinctDirsAndPics(files, path)
+	info["dirs"], info["pics"] = helpers.DistinctDirsAndPics(files, path)
 
 	// Format and send the template page
 	tpl, err := template.ParseFiles("pages/index.html")
