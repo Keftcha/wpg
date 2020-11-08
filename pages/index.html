@@ -27,12 +27,14 @@
 
         <br>
 
-        <div>
-            {{range .pics}}
-                <a href="{{.Path}}" title="{{.Name}}" target="_blank">
-                    <img src="{{.Path}}" alt="{{.Name}}" style="max-width: 20em; max-height: 20em;">
-                </a>
-            {{end}}
-        </div>
+        <center>
+            <div>
+                {{range .pics}}
+                    <a href="{{.Path}}" title="{{.Name}}" target="_blank">
+                        <img src="{{.Path}}" alt="{{.Name}}" style="max-width: 20em; max-height: 20em;">
+                    </a>
+                {{end}}
+            </div>
+        </center>
     </body>
 </html>
