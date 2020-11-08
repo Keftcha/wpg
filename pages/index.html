@@ -5,6 +5,18 @@
         <title>WPG - Gallery</title>
     </head>
     <body>
+        <form action="/slideshow/" method="get">
+            Slideshow:
+            <input type="number" min="0" name="delay">sec. |
+            <input type="radio" name="type" value="crt">Current directory
+            <input type="radio" name="type" value="sub">Currend and subdirecotries
+            <input type="radio" name="type" value="all">All
+            <input type="hidden" name="dir" value="{{.crntPath}}">
+            <input type="submit">
+        </form>
+
+        <br>
+
         {{range .dirs}}
             <a href="{{.Path}}">
                 {{.Name}}

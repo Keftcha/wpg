@@ -21,7 +21,8 @@ func gallery(w http.ResponseWriter, r *http.Request) {
 
 	// Make the map with infos to parse the template and
 	// Separate directories and pictures
-	info := make(map[string][]webFile)
+	info := make(map[string]interface{}) // ← This is realy bad
+	info["crntPath"] = path
 	info["dirs"], info["pics"] = distinctDirsAndPics(files, path)
 
 	// Format and send the template page
