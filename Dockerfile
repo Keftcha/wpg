@@ -13,5 +13,6 @@ WORKDIR /bin/wpg
 COPY --from=builder /bin/wpg .
 
 COPY ./pages pages/
+COPY ./static static/
 
 CMD ["./wpg"]

@@ -3,17 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <title>WPG - Slideshow</title>
+        <link rel="stylesheet" href="/static/style.css">
         <meta
             http-equiv="refresh"
             content="{{.delay}}, url=/slideshow/?type={{.type}}&img={{.nextImgPath}}&delay={{.delay}}&dir={{.dir}}"
         >
     </head>
-    <body style="background: black; margin: 0px">
+    <body class="slideshow">
         <center>
             <img
                 alt="{{.imgName}}"
                 src="{{.imgPath}}"
-                style="max-width: 100vw; max-height: 100vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                class="slideshow"
             >
         </center>
     </body>

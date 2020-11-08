@@ -3,15 +3,16 @@
     <head>
         <meta charset="UTF-8">
         <title>WPG - Gallery</title>
+        <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
         <form action="/slideshow/" method="get">
             Slideshow:
-            <input type="number" min="0" name="delay"> sec. |
+            <input type="number" min="0" name="delay" class="delay"> sec. |
             <input type="radio" name="type" value="crt">Current directory
             <input type="radio" name="type" value="sub">Currend and subdirecotries
             <input type="radio" name="type" value="all">All
-            <input type="hidden" name="dir" value="{{.crntPath}}">
+            <input type="hidden" name="dir" value="{{.crntPath}}"> |
             <input type="submit">
         </form>
 
@@ -19,7 +20,7 @@
 
         <nav>
             {{range .dirs}}
-                <a href="{{.Path}}">
+            <a href="{{.Path}}" class="directory_link">
                     {{.Name}}
                 </a>
             {{end}}
@@ -30,8 +31,9 @@
         <center>
             <div>
                 {{range .pics}}
-                    <a href="{{.Path}}" title="{{.Name}}" target="_blank">
-                        <img src="{{.Path}}" alt="{{.Name}}" style="max-width: 20em; max-height: 20em;">
+                    <a href="{{.Path}}" title="{{.Name}}" target="_blank"
+                        class="img_in_grid">
+                        <img src="{{.Path}}" alt="{{.Name}}" class="img_in_grid">
                     </a>
                 {{end}}
             </div>
