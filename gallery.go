@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -23,41 +24,10 @@ func gallery(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, http.StatusText(500), 500)
 	}
 
+	// Make the map with infos to parse the template and
 	// Separate directories and pictures
-	dirs, pics := make([]webFile, 0), make([]webFile, 0)
-	if path != "/" {
-		// Add the root directory
-		dirs = append(dirs, webFile{Name: "/", Path: "/"})
-		// Add the parent directory
-		dirs = append(
-			dirs,
-			webFile{
-				Name: "../",
-				Path: parentDir(path) + "/",
-			},
-		)
-	}
-	// Loop over directory content
-	for _, file := range files {
-		// Make the webFile
-		wbfle := webFile{
-			Name: file.Name(),
-			Path: path + file.Name(),
-		}
-		// Check if it's a directory
-		if file.IsDir() {
-			wbfle.Path = wbfle.Path + "/"
-			dirs = append(dirs, wbfle)
-		} else {
-			wbfle.Path = "/pics" + wbfle.Path
-			pics = append(pics, wbfle)
-		}
-	}
-
-	// Make the map with infos to parse the template
 	info := make(map[string][]webFile)
-	info["dirs"] = dirs
-	info["pics"] = pics
+	info["dirs"], info["pics"] = distinctDirsAndPics(files, path)
 
 	// Format and send the template page
 	tpl, err := template.ParseFiles("pages/index.html")
@@ -74,4 +44,45 @@ func parentDir(path string) string {
 	idx := strings.LastIndex(path, "/")
 	// Remove all thing after the last `/`
 	return path[:idx]
+}
+
+func newWebFileDir(file os.FileInfo, path string) webFile {
+	return webFile{
+		Name: file.Name(),
+		Path: path + file.Name() + "/",
+	}
+}
+
+func newWebFileImage(file os.FileInfo, path string) webFile {
+	return webFile{
+		Name: file.Name(),
+		Path: "/pics" + path + file.Name(),
+	}
+}
+
+func distinctDirsAndPics(files []os.FileInfo, path string) ([]webFile, []webFile) {
+	dirs, pics := make([]webFile, 0), make([]webFile, 0)
+	if path != "/" {
+		// Add the root directory
+		dirs = append(dirs, webFile{Name: "/", Path: "/"})
+		// Add the parent directory
+		dirs = append(
+			dirs,
+			webFile{
+				Name: "../",
+				Path: parentDir(path) + "/",
+			},
+		)
+	}
+	// Loop over directory content
+	for _, file := range files {
+		// Check if it's a directory
+		if file.IsDir() {
+			dirs = append(dirs, newWebFileDir(file, path))
+		} else {
+			pics = append(pics, newWebFileImage(file, path))
+		}
+	}
+
+	return dirs, pics
 }
