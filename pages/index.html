@@ -29,7 +29,9 @@
 
         <div>
             {{range .pics}}
-                <img src="{{.Path}}" alt="{{.Name}}" style="max-width: 20em; max-height: 20em;">
+                <a href="{{.Path}}" target="_blank">
+                    <img src="{{.Path}}" alt="{{.Name}}" style="max-width: 20em; max-height: 20em;">
+                </a>
             {{end}}
         </div>
     </body>
