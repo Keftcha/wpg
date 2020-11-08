@@ -8,8 +8,10 @@ import (
 )
 
 func gallery(w http.ResponseWriter, r *http.Request) {
+	// Get the directory where the user want to be
+	path := r.URL.Path
 	// Read files in the /pics directory
-	files, err := ioutil.ReadDir("/pics")
+	files, err := ioutil.ReadDir("/pics" + path)
 	if err != nil {
 		http.Error(w, http.StatusText(500), 500)
 	}
@@ -19,9 +21,9 @@ func gallery(w http.ResponseWriter, r *http.Request) {
 	for _, file := range files {
 		// Check if it's a directory
 		if file.IsDir() {
-			dirs = append(dirs, file.Name())
+			dirs = append(dirs, path+file.Name())
 		} else {
-			pics = append(pics, file.Name())
+			pics = append(pics, path+file.Name())
 		}
 	}
 
