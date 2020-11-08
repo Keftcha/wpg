@@ -56,9 +56,14 @@ func slideshow(w http.ResponseWriter, r *http.Request) {
 		// Get pictures file
 		_, filesName = distinctDirsAndPics(files, dir)
 	case "sub":
-		fmt.Println("sub")
+		reccursivlyFindPics(dir, &filesName)
 	case "all":
-		fmt.Println("all")
+		reccursivlyFindPics("/", &filesName)
+	}
+
+	if len(filesName) <= 0 {
+		http.Error(w, "No image found.", 404)
+		return
 	}
 
 	// Get the image to display
@@ -66,14 +71,14 @@ func slideshow(w http.ResponseWriter, r *http.Request) {
 	imgIdx := index(filesName, imgName)
 	var img webFile
 	if imgName == "" || imgIdx == -1 {
-		img = filesName[0]
+		img = (filesName)[0]
 		imgIdx = 0
 	} else {
-		img = filesName[imgIdx]
+		img = (filesName)[imgIdx]
 	}
 
 	// Get the next image file path
-	nextImgPath := filesName[(imgIdx+1)%len(filesName)].Path
+	nextImgPath := (filesName)[(imgIdx+1)%len(filesName)].Path
 
 	// Regroup info
 	info := map[string]string{

@@ -5,7 +5,6 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 func gallery(w http.ResponseWriter, r *http.Request) {
@@ -31,18 +30,4 @@ func gallery(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 	}
 	tpl.Execute(w, info)
-}
-
-func newWebFileDir(file os.FileInfo, path string) webFile {
-	return webFile{
-		Name: file.Name(),
-		Path: path + file.Name() + "/",
-	}
-}
-
-func newWebFileImage(file os.FileInfo, path string) webFile {
-	return webFile{
-		Name: file.Name(),
-		Path: "/pics" + path + file.Name(),
-	}
 }
