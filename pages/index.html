@@ -6,15 +6,15 @@
     </head>
     <body>
         {{range .dirs}}
-            <a href="{{.}}/">
-                {{.}}
+            <a href="{{.Path}}">
+                {{.Name}}
             </a>
         {{end}}
 
         <br>
 
         {{range .pics}}
-            <img src="/pics{{.}}" alt="{{.}}">
+            <img src="{{.Path}}" alt="{{.Name}}">
         {{end}}
     </body>
 </html>
