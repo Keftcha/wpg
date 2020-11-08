@@ -7,7 +7,7 @@
     <body>
         <form action="/slideshow/" method="get">
             Slideshow:
-            <input type="number" min="0" name="delay">sec. |
+            <input type="number" min="0" name="delay"> sec. |
             <input type="radio" name="type" value="crt">Current directory
             <input type="radio" name="type" value="sub">Currend and subdirecotries
             <input type="radio" name="type" value="all">All
@@ -17,16 +17,20 @@
 
         <br>
 
-        {{range .dirs}}
-            <a href="{{.Path}}">
-                {{.Name}}
-            </a>
-        {{end}}
+        <nav>
+            {{range .dirs}}
+                <a href="{{.Path}}">
+                    {{.Name}}
+                </a>
+            {{end}}
+        </nav>
 
         <br>
 
-        {{range .pics}}
-            <img src="{{.Path}}" alt="{{.Name}}">
-        {{end}}
+        <div>
+            {{range .pics}}
+                <img src="{{.Path}}" alt="{{.Name}}">
+            {{end}}
+        </div>
     </body>
 </html>
