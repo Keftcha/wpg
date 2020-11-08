@@ -21,7 +21,8 @@ func gallery(w http.ResponseWriter, r *http.Request) {
 	// Read files in the /pics directory
 	files, err := ioutil.ReadDir("/pics" + path)
 	if err != nil {
-		http.Error(w, http.StatusText(500), 500)
+		http.Redirect(w, r, "/", http.StatusNotFound)
+		return
 	}
 
 	// Make the map with infos to parse the template and
