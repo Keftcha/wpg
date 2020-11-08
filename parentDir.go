@@ -12,7 +12,6 @@ func parentDir(path string) string {
 	// Remove all thing after the last `/`
 	if idx != -1 {
 		return path[:idx]
-	} else {
-		return path
 	}
+	return path
 }
