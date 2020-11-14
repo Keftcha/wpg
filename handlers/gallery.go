@@ -27,7 +27,7 @@ func Gallery(w http.ResponseWriter, r *http.Request) {
 	info["dirs"], info["pics"] = helpers.DistinctDirsAndPics(files, path)
 
 	// Format and send the template page
-	tpl, err := template.ParseFiles("pages/index.html")
+	tpl, err := template.ParseFiles("pages/gallery.html")
 	if err != nil {
 		fmt.Println(err.Error())
 	}

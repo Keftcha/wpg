@@ -31,9 +31,10 @@
         <center>
             <div>
                 {{range .pics}}
-                    <a href="{{.Path}}" title="{{.Name}}" target="_blank"
-                        class="img_in_grid">
-                        <img src="{{.Path}}" alt="{{.Name}}" class="img_in_grid">
+                    <a href="{{.Path}}" title="{{.Name}}" target="_blank" class="img_in_grid">
+                        <figure>
+                            <img src="{{.Path}}" alt="{{.Name}}" class="img_in_grid">
+                        </figure>
                     </a>
                 {{end}}
             </div>
