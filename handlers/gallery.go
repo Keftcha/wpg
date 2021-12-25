@@ -29,12 +29,7 @@ func Gallery(w http.ResponseWriter, r *http.Request) {
 		Dirs     []helpers.WebFile
 		Pics     []helpers.WebFile
 		NbPics   int64
-		Pages    []struct {
-			NbPics        int64
-			Page          int
-			PageDisplay   int
-			IsCurrentPage bool
-		}
+		Pages    []helpers.Page
 	}{}
 	info.CrntPath = path
 	info.Dirs, info.Pics = helpers.DistinctDirsAndPics(files, path)
@@ -49,30 +44,7 @@ func Gallery(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Make the paging
-		totPages := len(info.Pics) / int(nbPics)
-		if len(info.Pics)%int(nbPics) != 0 {
-			totPages++
-		}
-		pages := make([]struct {
-			NbPics        int64
-			Page          int
-			PageDisplay   int
-			IsCurrentPage bool
-		}, totPages)
-		for i := 0; i < totPages; i++ {
-			pages[i] = struct {
-				NbPics        int64
-				Page          int
-				PageDisplay   int
-				IsCurrentPage bool
-			}{
-				NbPics:        nbPics,
-				Page:          i,
-				PageDisplay:   i + 1,
-				IsCurrentPage: i == int(pageNb),
-			}
-		}
-		info.Pages = pages
+		info.Pages = helpers.ListPages(len(info.Pics), nbPics, pageNb)
 
 		info.NbPics = nbPics
 		info.Pics = info.Pics[pageNb*nbPics : int(math.Min(float64((pageNb+1)*nbPics), float64(len(info.Pics))))]
