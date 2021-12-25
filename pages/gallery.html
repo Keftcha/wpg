@@ -12,15 +12,32 @@
             <input type="radio" name="type" value="crt">Current directory
             <input type="radio" name="type" value="sub">Currend and subdirecotries
             <input type="radio" name="type" value="all">All
-            <input type="hidden" name="dir" value="{{.crntPath}}"> |
+            <input type="hidden" name="dir" value="{{.CrntPath}}"> |
             <input type="submit">
         </form>
 
         <br>
 
+        <form action="" method="get">
+            Elements by page:
+            <input type="number" min="0" name="elem" value="{{.NbPics}}">
+            <input type="hidden" name="page" value="0">
+            <input type="submit" value="Display">
+        </form>
         <nav>
-            {{range .dirs}}
-            <a href="{{.Path}}" class="directory_link">
+            {{range .Pages}}
+                <a href="?elem={{.nbPics}}&page={{.page}}">
+                    {{.pageDisplay}}
+                </a>
+            {{end}}
+
+        </nav>
+
+        <br>
+
+        <nav>
+            {{range .Dirs}}
+                <a href="{{.Path}}" class="directory_link">
                     {{.Name}}
                 </a>
             {{end}}
@@ -30,7 +47,7 @@
 
         <center>
             <div>
-                {{range .pics}}
+                {{range .Pics}}
                     <a href="{{.Path}}" title="{{.Name}}" target="_blank" class="img_in_grid">
                         <figure>
                             <img src="{{.Path}}" alt="{{.Name}}" class="img_in_grid">
