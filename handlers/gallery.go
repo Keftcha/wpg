@@ -29,8 +29,12 @@ func Gallery(w http.ResponseWriter, r *http.Request) {
 		Dirs     []helpers.WebFile
 		Pics     []helpers.WebFile
 		NbPics   int64
-		Page     int
-		Pages    []map[string]int
+		Pages    []struct {
+			NbPics        int64
+			Page          int
+			PageDisplay   int
+			IsCurrentPage bool
+		}
 	}{}
 	info.CrntPath = path
 	info.Dirs, info.Pics = helpers.DistinctDirsAndPics(files, path)
@@ -49,12 +53,23 @@ func Gallery(w http.ResponseWriter, r *http.Request) {
 		if len(info.Pics)%int(nbPics) != 0 {
 			totPages++
 		}
-		pages := make([]map[string]int, totPages)
+		pages := make([]struct {
+			NbPics        int64
+			Page          int
+			PageDisplay   int
+			IsCurrentPage bool
+		}, totPages)
 		for i := 0; i < totPages; i++ {
-			pages[i] = map[string]int{
-				"nbPics":      int(nbPics),
-				"page":        i,
-				"pageDisplay": i + 1,
+			pages[i] = struct {
+				NbPics        int64
+				Page          int
+				PageDisplay   int
+				IsCurrentPage bool
+			}{
+				NbPics:        nbPics,
+				Page:          i,
+				PageDisplay:   i + 1,
+				IsCurrentPage: i == int(pageNb),
 			}
 		}
 		info.Pages = pages

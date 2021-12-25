@@ -26,8 +26,14 @@
         </form>
         <nav>
             {{range .Pages}}
-                <a href="?elem={{.nbPics}}&page={{.page}}">
-                    {{.pageDisplay}}
+                <a href="?elem={{.NbPics}}&page={{.Page}}">
+                    {{if .IsCurrentPage}}
+                        <i><b>
+                    {{end}}
+                    {{.PageDisplay}}
+                    {{if .IsCurrentPage}}
+                            </b></i>
+                    {{end}}
                 </a>
             {{end}}
 
